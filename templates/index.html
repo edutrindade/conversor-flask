@@ -3,7 +3,17 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Conversor de Dados</title>
+        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+        <meta name="description" content="Conversor de Dados Firebird para Excel" />
+        <meta name="author" content="Axxos" />
+        <meta name="robots" content="index, follow" />
+        <meta name="keywords" content="conversor, firebird, excel, axxos" />
+        <meta name="theme-color" content="#000000" />
+        <meta name="msapplication-TileColor" content="#000000" />
+        <meta name="msapplication-TileImage" content="https://axxos.com.br/wp-content/uploads/2024/02/cropped-Favicon-Axxos-270x270.png" />
+        <link rel="icon" href="https://axxos.com.br/wp-content/uploads/2024/02/cropped-Favicon-Axxos-192x192.png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="https://axxos.com.br/wp-content/uploads/2024/02/cropped-Favicon-Axxos-180x180.png" />
+        <title>Conversor de Produtos</title>
         <link rel="stylesheet" href="static/styles.css" />
     </head>
     <body>
@@ -21,6 +31,11 @@
                 <br />
                 <button type="submit" id="export_button">Exportar</button>
             </form>
+            {% with messages = get_flashed_messages() %} {% if messages %}
+            <div class="flash-message" id="flash-message">
+                <p class="message">{{ messages[0] }}</p>
+            </div>
+            {% endif %} {% endwith %}
             <div class="loading" id="loading">
                 <div class="spinner"></div>
                 Processando, por favor aguarde...
@@ -28,7 +43,7 @@
         </div>
         <script>
             function showLoading() {
-                document.getElementById('loading').style.display = 'block';
+                document.getElementById('loading').style.display = 'flex';
                 document.getElementById('export_button').disabled = true;
             }
 
@@ -39,8 +54,18 @@
                     setTimeout(() => {
                         document.getElementById('loading').style.display = 'none';
                         document.getElementById('export_button').disabled = false;
-                    }, 7000);
+                    }, 10000);
                 });
+            });
+
+            // Ocultar a mensagem de erro após 3 segundos, se existir
+            document.addEventListener('DOMContentLoaded', function () {
+                const flashMessage = document.getElementById('flash-message');
+                if (flashMessage) {
+                    setTimeout(() => {
+                        flashMessage.style.display = 'none';
+                    }, 2000);
+                }
             });
         </script>
     </body>

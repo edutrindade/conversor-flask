@@ -50,7 +50,9 @@ button:hover:enabled {
     background-color: #00539c;
 }
 .loading {
-    display: none;
+    display: none; /* Torna o container um flexbox */
+    align-items: center; /* Centraliza os itens verticalmente */
+    justify-content: center;
     margin-top: 10px;
     color: #0073e6;
 }
@@ -62,6 +64,7 @@ button:hover:enabled {
     height: 24px;
     animation: spin 1s linear infinite;
     display: inline-block;
+    margin-right: 10px;
 }
 @keyframes spin {
     0% {
@@ -73,4 +76,14 @@ button:hover:enabled {
 }
 .logo {
     margin-bottom: 20px;
+}
+.flash-message {
+    background-color: #f2dede;
+    color: #a94442;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 4px;
+}
+.message {
+    font-size: 13px;
 }
