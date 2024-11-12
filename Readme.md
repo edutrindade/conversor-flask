@@ -66,4 +66,15 @@ Abra um navegador e acesse a URL `http://localhost:5000` para visualizar a inter
 
 ![1731414364125](image/Readme/1731414364125.png)
 
+### 4. **Crie o Executável:**
+
+* Use o **PyInstaller** para criar um executável do seu script Python.
+* Execute o seguinte comando no terminal:
+
+  ```
+  pyinstaller -onefile --windowed
+  ```
+* O executável gerado estará na pasta `dist`. Você pode distribuir este arquivo para os clientes, que poderão executá-lo diretamente em suas máquinas.
+* Execute o executável gerado para garantir que ele funciona corretamente e acessa o banco de dados local. Se preferir utilizar na nuvem, lembre-se de hospedar a base de dados e mudar o caminho do diretório.
+
 😁
