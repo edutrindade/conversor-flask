@@ -52,7 +52,7 @@ Verifique se o banco de dados Firebird está acessível e ajuste o caminho para 
 Ative o servidor Flask com o seguinte comando:
 
 ```
-python3 app.py
+python3 index.py
 ```
 
 ### 2. Acesse a Aplicação
