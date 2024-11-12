@@ -1,4 +1,3 @@
-import os
 from flask import Flask, request, render_template, send_file
 import fdb
 import pandas as pd
@@ -19,31 +18,69 @@ def index():
         # Executar a consulta
         query = """
         SELECT 
-            '' AS "Código",
-            p.DESCRICAO AS "Descrição",
-            p.REFFABRICANTE AS "Código de Barras",
-            c.CODIGONCM AS "NCM",
-            f.NOME AS "Fornecedor",
-            'SIM' AS "Contabiliza saldo em estoque",
-            g.DESCRICAO AS "Setor",
-            sg.DESCRICAO AS "Linha",
-            gr.DESCRICAO AS "Tamanho",
-            fam.DESCRICAO AS "Classificação",
-            'LIDER MODAS' AS "Empresa",
-            'R$' AS "Moeda",
-            cp.PRECOCUSTO AS "Custo com ICMS (R$)",
-            cp.DESCONTOPERC AS "Desconto (%)",
-            cp.ALIQIPI AS "IPI (%)",
-            cp.FRETEVLR AS "Frete (R$)",
-            p.ESTMINIMO AS "Quantidade mínima",
-            p.ESTMAXIMO AS "Quantidade máxima",
-            p.UNIDADESAIDA AS "Unidade de Venda",
-            p.UNIDADEENT AS "Unidade de Compra",
-            p.FATORCONVERSAO AS "Múltiplo de venda",
-            p.PESO AS "Peso bruto",
-            p.PRECO AS "Preço de venda R$",
-            'S' AS "Permite desconto",
-            p.OBSERVACAO AS "Observação"
+            '' AS "Código",  -- Deixando em branco
+            p.DESCRICAO AS "Descrição",  -- Descrição do produto
+            p.REFFABRICANTE AS "Referência",  -- Referência do fabricante
+            '' AS "Cód. Auxiliar",  -- Deixando em branco
+            f.NOME AS "Fornecedor",  -- Nome do fornecedor
+            '' AS "Fornecedor exclusivo",  -- Deixando em branco
+            '' AS "Comprador",  -- Deixando em branco
+            e.EMPRESA AS "Empresa",  -- Nome da empresa da tabela EMPRESA
+            'SIM' AS "Contabiliza saldo em estoque",  -- Contabiliza saldo em estoque
+            '' AS "Indisponível para venda",  -- Deixando em branco
+            g.DESCRICAO AS "Setor",  -- Descrição do grupo como Setor
+            sg.DESCRICAO AS "Linha",  -- Descrição do subgrupo como Linha
+            '' AS "Marca",  -- Deixando em branco
+            '' AS "Coleção",  -- Deixando em branco
+            '' AS "Espessura",  -- Deixando em branco
+            fam.DESCRICAO AS "Classificação",  -- Descrição da família como Classificação
+            gr.DESCRICAO AS "Tamanho",  -- Descrição da grade como Tamanho
+            '' AS "Cores",  -- Deixando em branco
+            p.UNIDADESAIDA AS "Unidade de venda",  -- Unidade de venda
+            p.FATORCONVERSAO AS "Múltiplo de venda",  -- Múltiplo de venda
+            'R$' AS "Moeda",  -- Moeda
+            cp.PRECOCUSTO AS "Custo com ICMS (R$)",  -- Custo com ICMS
+            cp.DESCONTOPERC AS "Desconto (%)",  -- Desconto percentual
+            '' AS "Acréscimo (%)",  -- Deixando em branco
+            cp.ALIQIPI AS "IPI (%)",  -- Alíquota de IPI
+            cp.FRETEVLR AS "Frete (R$)",  -- Valor do frete
+            '' AS "Despesas acessórias (R$)",  -- Deixando em branco
+            '' AS "Substituição tributária (R$)",  -- Deixando em branco
+            '' AS "Diferencial ICMS (R$)",  -- Deixando em branco
+            '' AS "Mark-up (%)",  -- Deixando em branco
+            p.PRECO AS "Preço de venda R$",  -- Preço de venda
+            'S' AS "Permite desconto",  -- Permite desconto
+            '' AS "Comissão %",  -- Deixando em branco
+            '' AS "Configuração tributária",  -- Deixando em branco
+            c.CODIGONCM AS "NCM",  -- Código NCM
+            p.CODCEST AS "CEST",  -- Código CEST
+            '' AS "Produto supérfluo",  -- Deixando em branco
+            '' AS "Tipo de item",  -- Deixando em branco
+            '' AS "Origem da mercadoria",  -- Deixando em branco
+            '' AS "Regime de Incidência PIS e COFINS",  -- Deixando em branco
+            '' AS "Produto é brinde",  -- Deixando em branco
+            '' AS "Produto de catálogo",  -- Deixando em branco
+            '' AS "Descrição de catálogo",  -- Deixando em branco
+            '' AS "Disponível na loja virtual",  -- Deixando em branco
+            '' AS "Exige controle",  -- Deixando em branco
+            '' AS "Tipo de controle",  -- Deixando em branco
+            '' AS "Tamanho controle",  -- Deixando em branco
+            p.PESO AS "Peso bruto (kg)",  -- Peso bruto do produto
+            '' AS "Peso líquido (kg)",  -- Deixando em branco
+            '' AS "Descrição complementar?",  -- Deixando em branco
+            '' AS "Altura (frete)",  -- Deixando em branco
+            '' AS "Largura (frete)",  -- Deixando em branco
+            '' AS "Comprimento (frete)",  -- Deixando em branco
+            '' AS "Altura",  -- Deixando em branco
+            '' AS "Largura",  -- Deixando em branco
+            '' AS "Comprimento",  -- Deixando em branco
+            '' AS "Importado por balança",  -- Deixando em branco
+            p.ESTMINIMO AS "Quantidade mínima",  -- Quantidade mínima
+            p.ESTMAXIMO AS "Quantidade máxima",  -- Quantidade máxima
+            '' AS "Quantidade compra",  -- Deixando em branco
+            p.OBSERVACAO AS "Observação",  -- Observações
+            p.REFFABRICANTE AS "Código de barras",  -- Código de barras
+            '' AS "Características"  -- Deixando em branco
         FROM 
             PRODUTO p
         JOIN 
@@ -60,6 +97,8 @@ def index():
             GRADE gr ON cp.CODGRADE = gr.CODGRADE
         JOIN 
             FAMILIA fam ON p.CODFAMILIA = fam.CODIGO
+        JOIN 
+            EMPRESA e ON 1=1  -- Join com a tabela EMPRESA, assumindo que só há uma linha
         WHERE 
             p.ATIVO = 'S';
         """
